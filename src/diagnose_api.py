@@ -30,13 +30,11 @@ def check_environment():
     
     print("✅ .env file found")
     print(f"API Key: {'Present' if api_key else '❌ Missing'}")
-    print(f"Secret Key: {'Present' if secret_key else '❌ Missing'}")
+    print(f"Secret Key: {'set' if secret_key else '❌ missing'}")
     print(f"Testnet: {testnet}")
     
     if api_key:
-        print(f"API Key preview: {api_key[:8]}...{api_key[-4:]}")
-    if secret_key:
-        print(f"Secret Key preview: {secret_key[:8]}...{secret_key[-4:]}")
+        print(f"API Key preview: ...{api_key[-4:]}")
     
     return bool(api_key and secret_key)
 
