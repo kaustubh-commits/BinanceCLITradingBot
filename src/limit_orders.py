@@ -89,7 +89,7 @@ class LimitOrderManager:
             if not self.validator.validate_symbol(symbol):
                 raise ValueError(f"Invalid symbol: {symbol}")
 
-            result = self.client.futures_cancel_order(
+            self.client.futures_cancel_order(
                 symbol=symbol.upper(),
                 orderId=order_id
             )

@@ -28,7 +28,7 @@ def check_environment():
     secret_key = os.getenv('BINANCE_SECRET_KEY')
     testnet = os.getenv('BINANCE_TESTNET', 'True').lower() == 'true'
     
-    print(f"✅ .env file found")
+    print("✅ .env file found")
     print(f"API Key: {'Present' if api_key else '❌ Missing'}")
     print(f"Secret Key: {'Present' if secret_key else '❌ Missing'}")
     print(f"Testnet: {testnet}")
@@ -226,7 +226,7 @@ def main():
         "Futures Permissions"
     ]
     
-    for i, (name, result) in enumerate(zip(test_names, results)):
+    for name, result in zip(test_names, results):
         status = "✅ PASS" if result else "❌ FAIL"
         print(f"{name}: {status}")
     

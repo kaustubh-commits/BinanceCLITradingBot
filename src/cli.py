@@ -1,5 +1,5 @@
 import click
-from colorama import Fore, Style, init
+from colorama import Fore, init
 from src.market_orders import MarketOrderManager
 from src.limit_orders import LimitOrderManager
 from src.advanced.oco  import OCOOrderManager

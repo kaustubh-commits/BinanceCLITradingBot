@@ -1,5 +1,4 @@
 from binance.client import Client
-from binance.exceptions import BinanceAPIException
 import time
 from src.bot_logger import setup_logger
 from src.validator import OrderValidator

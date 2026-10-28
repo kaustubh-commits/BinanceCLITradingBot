@@ -1,6 +1,6 @@
 import time
 import threading
-from datetime import datetime, timedelta
+from datetime import datetime
 from src.market_orders import MarketOrderManager
 from src.bot_logger import setup_logger
 from src.validator import OrderValidator

@@ -9,13 +9,12 @@
     <a href="#installation">Installation</a> •
     <a href="#configuration">Configuration</a> •
     <a href="#usage">Usage</a> •
-    <a href="#testing-status">Testing</a> •
+    <a href="#testing">Testing</a> •
     <a href="#security">Security</a>
   </p>
   <p>
     <img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="Python 3.8+">
     <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT License">
-    <img src="https://img.shields.io/badge/status-release--candidate-yellow.svg" alt="Release Candidate">
   </p>
 </div>
 
@@ -25,9 +24,7 @@
 
 **Binance Futures Trading Bot** is a CLI-driven trading tool for Binance USDT-M Futures. It supports market orders, limit orders, OCO (take-profit + stop-loss) pairs, TWAP execution, and grid trading strategies.
 
-This project was built to demonstrate clean Python architecture for automated trading — modular design, input validation, structured logging, testnet support, and comprehensive error handling.
-
-It was originally developed and tested against the Binance Futures Testnet. The current release focuses on repository quality, documentation, architecture, validation, and maintainability.
+This project was built to demonstrate clean Python architecture for automated trading — modular design, input validation, structured logging, testnet support, and comprehensive error handling. It was developed and tested against the Binance Futures Testnet.
 
 ---
 
@@ -89,7 +86,7 @@ User (CLI)
 ## Project Structure
 
 ```
-binance-futures-bot/
+BinanceCLITradingBot/
 │
 ├── src/                        # Source code package
 │   ├── __init__.py
@@ -106,10 +103,16 @@ binance-futures-bot/
 │       ├── twap.py             # Time-weighted average price execution
 │       └── grid.py             # Grid trading strategy
 │
+├── tests/                      # pytest suite (Binance client mocked)
+│   ├── test_validator.py
+│   ├── test_cli.py
+│   └── test_order_managers.py
+│
 ├── logs/                       # Runtime log files (auto-generated, gitignored)
 ├── .env.example                # Configuration template
 ├── .gitignore
 ├── requirements.txt
+├── pytest.ini
 ├── LICENSE
 └── README.md
 ```
@@ -128,8 +131,8 @@ binance-futures-bot/
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/binance-futures-bot.git
-cd binance-futures-bot
+git clone https://github.com/kaustubh-commits/BinanceCLITradingBot.git
+cd BinanceCLITradingBot
 
 # (Optional) Create and activate a virtual environment
 python -m venv venv
@@ -294,24 +297,22 @@ This script checks:
 
 ---
 
-## Testing Status
+## Testing
 
-The following verification was performed during this release:
+The repository includes a pytest suite that runs fully offline — the Binance client is mocked, so no API keys or network access are needed.
 
-| Area | Status |
+```bash
+pip install pytest
+pytest
+```
+
+| File | Covers |
 |------|--------|
-| Module organization and import structure | ✓ Verified |
-| CLI command structure and argument parsing | ✓ Verified |
-| Dependency installation and compatibility | ✓ Verified |
-| Configuration loading from `.env` | ✓ Verified |
-| Input validation layer (symbol, quantity, price, side, TIF) | ✓ Verified |
-| Structured logging setup and output | ✓ Verified |
-| Error handling in order managers | ✓ Verified |
-| API connectivity and authentication flow | ✓ Verified via diagnostic script |
+| `tests/test_validator.py` | Symbol, quantity, price, side, time-in-force, and order-type validation |
+| `tests/test_cli.py` | CLI argument parsing, type conversion, defaults (`--tif`, `--interval`), and output for every command |
+| `tests/test_order_managers.py` | Market and limit order managers: request parameters sent to Binance, input rejection before any API call, and API error handling |
 
-The project was originally developed and tested against the Binance Futures Testnet during its initial implementation. This release focuses on repository quality, documentation, architecture, validation, and maintainability.
-
-**Actual order execution** requires users to configure their own Binance Futures Testnet API credentials. No new end-to-end integration tests were performed as part of this release.
+Live order execution is not covered by automated tests. To exercise it end-to-end, configure Binance Futures Testnet credentials (see [Configuration](#configuration)) and run the commands above, or use the [API diagnostics](#api-diagnostics) script to verify connectivity.
 
 ---
 
@@ -346,7 +347,7 @@ Potential areas for future development:
 - Persistent order state (e.g., SQLite or file-based storage)
 - Portfolio-level tracking and risk management
 - Additional order types (trailing stop, iceberg)
-- Unit and integration test suite
+- Integration tests against the Binance Futures Testnet
 - Docker containerization
 - CLI output formatting improvements (tables, JSON output flag)
 
@@ -361,25 +362,3 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 ## Disclaimer
 
 **This software is for educational purposes only.** Cryptocurrency futures trading carries substantial financial risk. You may lose more than your initial investment. Always test thoroughly on testnet before considering live trading. The authors are not responsible for any financial losses incurred through the use of this software.
-
----
-
-## Release Checklist
-
-The following items have been confirmed for this release:
-
-- [x] README complete and professionally formatted
-- [x] LICENSE file present (MIT)
-- [x] `.env.example` present with clear instructions
-- [x] `.gitignore` complete (excludes `.env`, `logs/`, `__pycache__/`, `.venv/`, etc.)
-- [x] No credentials or secrets committed to version control
-- [x] No log files committed to version control
-- [x] Repository structure organized and documented
-- [x] Installation instructions verified against a clean environment
-- [x] CLI usage documented with examples
-- [x] All dependencies listed with versions
-- [x] Architecture documented with diagram
-- [x] Limitations honestly documented
-- [x] Testing status transparently described
-- [x] Security notes provided
-- [x] Repository ready for GitHub publication
